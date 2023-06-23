@@ -6,13 +6,13 @@ import os
 from pathlib import Path
 
 
-default_config = os.path.join(Path.home(), 'configs', 'config-dh.yml')
+default_config = os.path.join(Path.home(), 'configs', 'config-default.yml')
 
 
-def run_query(query, o_config_file=default_config, dbtype='oracle', arraysize=120000, fetch_ct=1000000):
+def __read_config_file(config_file=default_config, dbtype='oracle'):
     if dbtype != 'oracle':
         raise(Exception('Database type not supported'))
-    with open(o_config_file, 'r') as ymlfile:
+    with open(config_file, 'r') as ymlfile:
         cfg = yaml.load(ymlfile, yaml.FullLoader)
 
     user = cfg['database']['username']
@@ -21,7 +21,11 @@ def run_query(query, o_config_file=default_config, dbtype='oracle', arraysize=12
         pwd = cfg['database']['password']
     else:
         pwd = getpass.getpass('Database password: ')
+    return user, pwd, host
 
+
+def run_query(query, config_file=default_config, arraysize=120000, fetch_ct=1000000):
+    user, pwd, host = __read_config_file(config_file)
     results = []
     with oracledb.connect(user=user, password=pwd, dsn=host) as connection:
         cursor = connection.cursor()
@@ -29,7 +33,6 @@ def run_query(query, o_config_file=default_config, dbtype='oracle', arraysize=12
         cursor.execute(query)
         while True:
             rows = cursor.fetchmany(fetch_ct)
-            # rows = cursor.fetchall()
             if not rows:
                 break
             else:
@@ -38,18 +41,8 @@ def run_query(query, o_config_file=default_config, dbtype='oracle', arraysize=12
     return pd.DataFrame(results, columns=cols)
 
 
-def run_command(c, o_config_file=default_config, dbtype='oracle'):
-    if dbtype != 'oracle':
-        raise(Exception('Database type not supported'))
-    with open(o_config_file, 'r') as ymlfile:
-        cfg = yaml.load(ymlfile, yaml.FullLoader)
-
-    user = cfg['database']['username']
-    host = cfg['database']['host']
-    if 'password' in cfg['database']:
-        pwd = cfg['database']['password']
-    else:
-        pwd = getpass.getpass('Database password: ')
+def run_command(c, config_file=default_config):
+    user, pwd, host = __read_config_file(config_file)
 
     connection = oracledb.connect(user=user, password=pwd, dsn=host)
     cursor = connection.cursor()
@@ -62,18 +55,8 @@ def run_command(c, o_config_file=default_config, dbtype='oracle'):
     connection.close()
 
 
-def load_data(data, tablename, o_config_file=default_config, dbtype='oracle'):
-    if dbtype != 'oracle':
-        raise(Exception('Database type not supported'))
-    with open(o_config_file, 'r') as ymlfile:
-        cfg = yaml.load(ymlfile, yaml.FullLoader)
-
-    user = cfg['database']['username']
-    host = cfg['database']['host']
-    if 'password' in cfg['database']:
-        pwd = cfg['database']['password']
-    else:
-        pwd = getpass.getpass('Database password: ')
+def load_data(data, tablename, config_file=default_config):
+    user, pwd, host = __read_config_file(config_file)
 
     connection = oracledb.connect(user=user,
                                   password=pwd,

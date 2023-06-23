@@ -1,0 +1,4 @@
+database:
+    username: "username"
+    host: "TNSNAMES.ALIAS" # e.g. MYDB.WORLD
+    password: "mypassword"
