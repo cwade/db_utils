@@ -6,13 +6,13 @@ The three methods in this package, run_query, run_command, and load_data, all re
 ### Installation
 
 ```
-pip install pydb_utils
+pip install wdb_utils
 ```
 
 ### Usage
 
 ```
-import pydb_utils as db
+import wdb_utils as db
 
 # Assuming your config file is located at /Users/myname/configs/config-default.yml
 
