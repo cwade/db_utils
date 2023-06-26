@@ -6,13 +6,13 @@ The three methods in this package, run_query, run_command, and load_data, all re
 ### Installation
 
 ```
-pip install git+ssh://git@github.com/cwade/db_utils.git
+pip install pydb_utils
 ```
 
 ### Usage
 
 ```
-import db_utils as db
+import pydb_utils as db
 
 # Assuming your config file is located at /Users/myname/configs/config-default.yml
 
@@ -22,7 +22,9 @@ df = db.run_query('select * from my_table')
 # Delete all the data in that same table
 db.run_command('delete from my_table')
 
-# Put all the data back into the 
+# Put all the data back into the table
+# Be aware that record order is not guaranteed to be preserved here
+# Trying to decide if that's enough of a problem to fix it
 db.load_data(df, 'my_table')
 ```
 

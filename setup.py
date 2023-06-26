@@ -1,11 +1,11 @@
 from setuptools import setup
 setup(
-    name='db_utils',
+    name='pydb_utils',
     version='1.0',
     author='Courtney Wade',
     description='Utilities for querying and loading data into an Oracle database. Queries return to pandas dataframes. Faster than SQLAlchemy.',
     long_description='Utilities for querying and loading data into an Oracle database. Eventually planning to add support for other database types',
-    url='https://github.com/BenjaminFranline',
+    url='https://github.com/cwade/pydb_utils',
     keywords='pandas, oracle, query',
     python_requires='>=3.7, <4',
     install_requires=[
