@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 default_config = os.path.join(Path.home(), 'configs', 'config-default.yml')
+oracledb.defaults.fetch_lobs = False
 
 
 def __read_config_file(config_file=default_config, dbtype='oracle'):
@@ -37,7 +38,7 @@ def run_query(query, config_file=default_config, arraysize=120000, fetch_ct=1000
                 break
             else:
                 results = results + rows
-            cols = [n[0] for n in cursor.description]
+        cols = [n[0] for n in cursor.description]
     return pd.DataFrame(results, columns=cols)
 
 

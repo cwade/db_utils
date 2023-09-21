@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='wdb_utils',
-    version='1.0',
+    version='1.2.0',
     author='Courtney Wade',
     description='Utilities for querying and loading data into an Oracle database. Queries return to pandas dataframes. Faster than SQLAlchemy.',
     long_description='Utilities for querying and loading data into an Oracle database. Eventually planning to add support for other database types',
