@@ -1,4 +1,11 @@
-database:
+oracle:
     username: "username"
     host: "TNSNAMES.ALIAS" # e.g. MYDB.WORLD
     password: "mypassword"
+
+snowflake:
+    username: "username"
+    database: "DBNAME"
+    schema: "SCHEMANAME"
+    account: "abcdefg-hi12345"
+    password: "myotherpassword"
