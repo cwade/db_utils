@@ -1,4 +1,4 @@
-# db_utils
+# wdb_utils
 Utilities for querying an Oracle and/or Snowflake database. Planning to eventually expand to other database types.
 
 All the methods in this package require a yaml config file. For convenience, we assume this file is located in /Users/username/configs/config-default.yml.
