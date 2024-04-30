@@ -29,6 +29,7 @@ class DatabaseConnection:
 
     def run_query(self, query, arraysize=120000, fetch_ct=1000000):
         results = []
+        cols = None
         with self._connect() as connection:
             cursor = connection.cursor()
             cursor.arraysize = arraysize
@@ -40,7 +41,11 @@ class DatabaseConnection:
                 else:
                     results = results + rows
             cols = [n[0] for n in cursor.description]
-        return pd.DataFrame(results, columns=cols)
+
+        if cols is not None:
+            return pd.DataFrame(results, columns=cols)
+        else:
+            return
 
     def run_command(self, command):
         with self._connect() as connection:
@@ -69,7 +74,15 @@ class OracleConnection(DatabaseConnection):
         else:
             pwd = getpass.getpass('Database password: ')
 
+        if 'mode' in self.config['oracle']:
+            mode = self.config['oracle']['mode']
+        else:
+            mode = 'thin'
+
         try:
+            if mode == 'thick':
+                self.oracledb.init_oracle_client()
+
             conn = self.oracledb.connect(user=user, password=pwd, dsn=host)
             return conn
         except Exception as e:

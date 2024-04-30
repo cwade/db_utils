@@ -2,6 +2,7 @@ oracle:
     username: "username"
     host: "TNSNAMES.ALIAS" # e.g. MYDB.WORLD
     password: "mypassword"
+    mode: "thick" # or thin - if omitted, defaults to thin
 
 snowflake:
     username: "username"
