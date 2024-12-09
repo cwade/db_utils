@@ -9,9 +9,9 @@ from contextlib import contextmanager
 
 class DatabaseConnection:
 
-    def __init__(self, engine, config_file=None):
+    def __init__(self, config_file=None):
         if pd.isnull(config_file):
-            config = os.path.join(Path.home(), 'configs', 'config-default.yml'.format(engine))
+            config = os.path.join(Path.home(), 'configs', 'config-default.yml')
         else:
             config = config_file
         if not os.path.exists(config):
